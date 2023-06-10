@@ -1,0 +1,58 @@
+<component name="ArtifactManager">
+  <artifact name="MyMacroManager_DiscordBot:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/MyMacroManager_DiscordBot_jar2</output-path>
+    <root id="root">
+      <element id="archive" name="MyMacroManager_DiscordBot.jar">
+        <element id="module-output" name="MyMacroManager_DiscordBot.main" />
+      </element>
+      <element id="library" level="project" name="Gradle: com.austinv11.servicer:Servicer:1.0.3" />
+      <element id="library" level="project" name="Gradle: org.junit.jupiter:junit-jupiter-api:5.8.1" />
+      <element id="library" level="project" name="Gradle: com.discord4j:discord4j-gateway:3.2.3" />
+      <element id="library" level="project" name="Gradle: com.discord4j:discord4j-common:3.2.3" />
+      <element id="library" level="project" name="Gradle: com.google.errorprone:error_prone_annotations:2.4.0" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-resolver:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.7.32" />
+      <element id="library" level="project" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.7" />
+      <element id="library" level="project" name="Gradle: com.discord4j:discord4j-voice:3.2.3" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-handler-proxy:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-handler:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: io.projectreactor:reactor-core:3.4.22" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-transport:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: org.junit.platform:junit-platform-engine:1.8.1" />
+      <element id="library" level="project" name="Gradle: com.discord4j:discord-json:1.6.13" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-resolver-dns:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: org.reactivestreams:reactive-streams:1.0.4" />
+      <element id="library" level="project" name="Gradle: io.projectreactor.addons:reactor-extra:3.4.8" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-codec:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-codec-socks:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-resolver-dns-classes-macos:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: com.discord4j:stores-jdk:3.2.1" />
+      <element id="library" level="project" name="Gradle: com.discord4j:discord-json-api:1.6.13" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-codec-http2:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: ch.qos.logback:logback-classic:1.2.12" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-codec-dns:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: ch.qos.logback:logback-core:1.2.12" />
+      <element id="library" level="project" name="Gradle: com.discord4j:discord4j-rest:3.2.3" />
+      <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.12.7" />
+      <element id="library" level="project" name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.8.1" />
+      <element id="library" level="project" name="Gradle: org.opentest4j:opentest4j:1.2.0" />
+      <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.12.7" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-buffer:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-transport-classes-epoll:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-resolver-dns-native-macos:osx-x86_64:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-transport-native-unix-common:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: com.discord4j:stores-api:3.2.1" />
+      <element id="library" level="project" name="Gradle: com.discord4j:discord4j-core:3.2.3" />
+      <element id="library" level="project" name="Gradle: com.github.ben-manes.caffeine:caffeine:2.8.8" />
+      <element id="library" level="project" name="Gradle: io.projectreactor.netty:reactor-netty-core:1.0.22" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-codec-http:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: io.projectreactor.netty:reactor-netty-http:1.0.22" />
+      <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.12.7" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-transport-native-epoll:linux-x86_64:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: io.netty:netty-common:4.1.79.Final" />
+      <element id="library" level="project" name="Gradle: com.discord4j:simple-fsm:1.0.1" />
+      <element id="library" level="project" name="Gradle: org.checkerframework:checker-qual:3.8.0" />
+      <element id="library" level="project" name="Gradle: org.junit.platform:junit-platform-commons:1.8.1" />
+    </root>
+  </artifact>
+</component>
