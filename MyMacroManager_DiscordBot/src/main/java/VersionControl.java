@@ -8,7 +8,6 @@ public class VersionControl {
     private EmbedCreateSpec embedCreateSpec;
 
     public VersionControl() {
-        //test for github
         embedCreateSpec = EmbedCreateSpec.builder()
                 .color(Color.DEEP_LILAC)
                 .title("Macro Manager")
