@@ -12,7 +12,7 @@ public class VersionControl {
                 .color(Color.DEEP_LILAC)
                 .title("Macro Manager")
                 .author("Created by: Double",null, null)
-                .description("Version 1.2.1")
+                .description("Version 1.2.2")
                 .thumbnail("https://cdn.discordapp.com/avatars/564839474249334807/a_05f1000abae0486262310f60441d09eb.gif")
                 .addField("discord4j", "3.3.0-M2", true)
                 .addField("Shadow-Run", "8.1.1", true)
