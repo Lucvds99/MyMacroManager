@@ -14,7 +14,7 @@ application {
 
 shadowJar {
     archiveBaseName.set('MacroManger')
-    archiveVersion.set('')
+    archiveVersion.set('1.2.1')
     archiveClassifier.set('')
 }
 
