@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
+
 }
 
 group 'org.example'
@@ -11,6 +12,12 @@ application {
     mainClass = 'Main'
 }
 
+shadowJar {
+    archiveBaseName.set('MacroManger')
+    archiveVersion.set('')
+    archiveClassifier.set('')
+}
+
 repositories {
     mavenCentral()
 }
@@ -18,7 +25,7 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    implementation 'com.discord4j:discord4j-core:3.2.3'
+    implementation 'com.discord4j:discord4j-core:3.3.0-M2'
     implementation 'ch.qos.logback:logback-classic:1.2.12'
 }
 

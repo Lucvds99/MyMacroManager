@@ -1,8 +1,4 @@
 import discord4j.core.DiscordClient;
-import discord4j.core.GatewayDiscordClient;
-import discord4j.core.event.domain.lifecycle.ReadyEvent;
-import discord4j.core.object.entity.User;
-import reactor.core.publisher.Mono;
 
 public class Connection {
     private DiscordClient client;
