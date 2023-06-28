@@ -1,4 +1,3 @@
-import discord4j.common.util.Snowflake;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.interaction.ButtonInteractionEvent;
@@ -8,10 +7,6 @@ import discord4j.core.object.component.ActionRow;
 import discord4j.core.object.component.Button;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
-import discord4j.core.object.entity.channel.Channel;
-import discord4j.core.object.entity.channel.GuildMessageChannel;
-import discord4j.core.spec.EmbedCreateSpec;
-import discord4j.core.spec.MessageCreateSpec;
 import reactor.core.publisher.Mono;
 
 import java.awt.*;
@@ -21,14 +16,13 @@ import java.util.concurrent.TimeoutException;
 
 public class Main {
     private static DiscordClient client;
-    private static VersionControl versionControl = new VersionControl();
 
     public static void main(String[] args) throws AWTException {
         while (true) {
             Connection connection = new Connection();
             client = connection.client();
 
-            versionControl = new VersionControl();
+
             new Macros();
 
             ResetText resetText = new ResetText();
@@ -89,6 +83,7 @@ public class Main {
                     } else if (event.getCustomId().equals("reset")) {
                         return event.reply(resetText.resetText).withComponents(ActionRow.of(cameraFade, cameraDelay, switchDisplayLeft, switchDisplayRight ,versionControlButton), ActionRow.of(reset));
                     } else if (event.getCustomId().equals("versionControlButton")) {
+                        VersionControl versionControl = new VersionControl(event.getInteraction().getUser().getUsername());
                         return event.reply().withEmbeds(versionControl.embedCreateSpec()).withEphemeral(true);
                     } else {
                         return Mono.empty();
