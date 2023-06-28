@@ -20,7 +20,7 @@ public class VersionControl {
                 .addField("logback", "1.2.12", true)
                 .image("https://images.squarespace-cdn.com/content/v1/5f3086ffb5573e1a11f7dc18/1611617447555-FVY71KV3JB0YX0VPXKQS/YDMK+Macro.jpg")
                 .footer("Version Date: ", null)
-                .timestamp(Instant.now(Clock.fixed(Instant.parse("2023-06-26T22:00:00Z"), Clock.systemUTC().getZone().normalized())))
+                .timestamp(Instant.now(Clock.fixed(Instant.parse("2023-06-27T22:00:00Z"), Clock.systemUTC().getZone().normalized())))
                 .build();
     }
     public EmbedCreateSpec embedCreateSpec(){

@@ -19,7 +19,6 @@ import java.util.concurrent.TimeoutException;
 
 public class Main {
     private static DiscordClient client;
-
     public static void main(String[] args) throws AWTException {
         while (true) {
             Connection connection = new Connection();
@@ -33,23 +32,20 @@ public class Main {
                     SelectMenu.Option.of("Bot Related", "Bot")
             ).withPlaceholder("Select Category").withMinValues(1).withMaxValues(1);
 
-
             new Macros();
 
             ResetText resetText = new ResetText();
-
+            
             //function buttons
-            Button reset = Button.primary("reset", "reset");
             Button versionControlButton = Button.success("versionControlButton", "Version Control");
-            Button menuButton = Button.success("menu", "menu");
 
             //camera buttons
-            Button cameraFade = Button.secondary("cameraFade", "Camera Fade");
+            Button cameraFade = Button.primary("cameraFade", "Camera Fade");
             Button cameraDelay = Button.secondary("cameraDelay", "camera delay");
 
             //control buttons
-            Button switchDisplayRight = Button.secondary("switchDisplayRight", "switch display >");
-            Button switchDisplayLeft = Button.secondary("switchDisplayLeft", "< switch display");
+            Button switchDisplayRight = Button.primary("switchDisplayRight", "switch display >");
+            Button switchDisplayLeft = Button.primary("switchDisplayLeft", "< switch display");
 
             Mono<Void> login = client.withGateway((GatewayDiscordClient gateway) -> {
                 // ReadyEvent
@@ -62,11 +58,7 @@ public class Main {
                 // MessageCreateEvent
                 Mono<Void> handlePingCommand = gateway.on(MessageCreateEvent.class, event -> {
                     Message message = event.getMessage();
-
-                    if (message.getContent().equalsIgnoreCase("menu")) {
-                        return message.getChannel().flatMap(messageChannel -> messageChannel.createMessage("")
-                                .withComponents(ActionRow.of(cameraFade, cameraDelay, switchDisplayLeft, switchDisplayRight ,versionControlButton), ActionRow.of(reset, menuButton)));
-                    } else if (message.getContent().equalsIgnoreCase("refresh")) {
+                    if (message.getContent().equalsIgnoreCase("refresh")) {
                         return message.getChannel().flatMap(messageChannel -> messageChannel.createMessage(resetText.resetText).withComponents(ActionRow.of(select)));
                     }
                     return Mono.empty();
@@ -75,11 +67,11 @@ public class Main {
                 Mono<Void> MenuListener = gateway.on(SelectMenuInteractionEvent.class, event -> {
                     if (event.getCustomId().equals("menu")) {
                         if (event.getValues().get(0).equals("Pc")) {
-                            return event.reply(resetText.resetText).withComponents(ActionRow.of(switchDisplayLeft, switchDisplayRight), ActionRow.of(menuButton)).then();
+                            return event.reply(resetText.resetText).withComponents(ActionRow.of(switchDisplayLeft, switchDisplayRight), ActionRow.of(select)).then();
                         } else if (event.getValues().get(0).equals("Obs")) {
-                            return event.reply(resetText.resetText).withComponents(ActionRow.of(cameraFade, cameraDelay), ActionRow.of(menuButton)).then();
+                            return event.reply(resetText.resetText).withComponents(ActionRow.of(cameraFade, cameraDelay), ActionRow.of(select)).then();
                         } else if ( event.getValues().get(0).equals("Bot")) {
-                            return event.reply(resetText.resetText).withComponents(ActionRow.of(versionControlButton), ActionRow.of(menuButton)).then();
+                            return event.reply(resetText.resetText).withComponents(ActionRow.of(versionControlButton), ActionRow.of(select)).then();
                         }
                     }
                     return Mono.empty();
@@ -100,13 +92,9 @@ public class Main {
                     } else if (event.getCustomId().equals("cameraDelay")) {
                         Macros.cameraDelay();
                         return event.deferEdit();
-                    } else if (event.getCustomId().equals("reset")) {
-                        return event.reply(resetText.resetText).withComponents(ActionRow.of(select));
                     } else if (event.getCustomId().equals("versionControlButton")) {
                         VersionControl versionControl = new VersionControl(event.getInteraction().getUser().getUsername());
                         return event.reply().withEmbeds(versionControl.embedCreateSpec()).withEphemeral(true);
-                    } else if (event.getCustomId().equals("menu")) {
-                        return event.reply(resetText.resetText).withComponents(ActionRow.of(select));
                     }
                     else {
                         return Mono.empty();
@@ -114,8 +102,6 @@ public class Main {
                 }).timeout(Duration.ofMinutes(30)).onErrorResume(TimeoutException.class, ignore -> Mono.empty()).then();
                 return printOnLogin.and(handlePingCommand).and(tempListener).and(MenuListener);
             });
-
-
             login.block();
         }
     }
