@@ -3,7 +3,7 @@ import discord4j.core.DiscordClient;
 public class Connection {
     private DiscordClient client;
     public Connection() {
-        client = DiscordClient.create("MTExNzAzMTMxMzExMTc4MTUwNg.GW-sou.D5kOyO_kETRjo0ERaifqwAVe-FDGC4ecuPfWjQ");
+        client = DiscordClient.create("Enter Bot Token here");
     }
 
     public DiscordClient client(){
