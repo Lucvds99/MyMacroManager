@@ -50,4 +50,12 @@ public class Macros {
         robot.keyRelease(17);  // Release Ctrl
     }
 
+    public static void logOff() {
+        robot.keyPress(524);   // Windows
+        robot.keyPress(76);    // L
+        robot.delay(500);
+        robot.keyRelease(76);  // Release L
+        robot.keyRelease(524); // Release Windows
+    }
+
 }
