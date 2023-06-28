@@ -14,8 +14,10 @@ import reactor.core.publisher.Mono;
 import javax.xml.bind.Marshaller;
 import java.awt.*;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.concurrent.TimeoutException;
 
+//TODO fix Button not responding after a long time being active problem. (maybe a timeout?)
 
 public class Main {
     private static DiscordClient client;
@@ -29,8 +31,10 @@ public class Main {
             final SelectMenu select = SelectMenu.of("menu",
                     SelectMenu.Option.of("Pc Related", "Pc"),
                     SelectMenu.Option.of("OBS", "Obs"),
-                    SelectMenu.Option.of("Bot Related", "Bot")
+                    SelectMenu.Option.of("Bot Related", "Bot"),
+                    SelectMenu.Option.of("Secured Selection", "securedSelection")
             ).withPlaceholder("Select Category").withMinValues(1).withMaxValues(1);
+
 
             new Macros();
 
@@ -46,6 +50,12 @@ public class Main {
             //control buttons
             Button switchDisplayRight = Button.primary("switchDisplayRight", "switch display >");
             Button switchDisplayLeft = Button.primary("switchDisplayLeft", "< switch display");
+            Button mediaControl = Button.primary("mediaControl", "Media Control");
+
+
+            //Secure Buttons
+            Button logOff = Button.danger("logOff", "Lock");
+            Button ShutDown = Button.danger("ShutDown", "Shut Down");
 
             Mono<Void> login = client.withGateway((GatewayDiscordClient gateway) -> {
                 // ReadyEvent
@@ -67,11 +77,13 @@ public class Main {
                 Mono<Void> MenuListener = gateway.on(SelectMenuInteractionEvent.class, event -> {
                     if (event.getCustomId().equals("menu")) {
                         if (event.getValues().get(0).equals("Pc")) {
-                            return event.reply(resetText.resetText).withComponents(ActionRow.of(switchDisplayLeft, switchDisplayRight), ActionRow.of(select)).then();
+                            return event.reply(resetText.resetText).withComponents(ActionRow.of(switchDisplayLeft, switchDisplayRight, mediaControl), ActionRow.of(select)).then();
                         } else if (event.getValues().get(0).equals("Obs")) {
                             return event.reply(resetText.resetText).withComponents(ActionRow.of(cameraFade, cameraDelay), ActionRow.of(select)).then();
                         } else if ( event.getValues().get(0).equals("Bot")) {
                             return event.reply(resetText.resetText).withComponents(ActionRow.of(versionControlButton), ActionRow.of(select)).then();
+                        } else if (event.getValues().get(0).equals("securedSelection")) {
+                            return event.reply(resetText.resetText).withComponents(ActionRow.of(logOff, ShutDown), ActionRow.of(select)).then();
                         }
                     }
                     return Mono.empty();
@@ -92,7 +104,17 @@ public class Main {
                     } else if (event.getCustomId().equals("cameraDelay")) {
                         Macros.cameraDelay();
                         return event.deferEdit();
-                    } else if (event.getCustomId().equals("versionControlButton")) {
+                    } else if (event.getCustomId().equals("logOff")) {
+                        Macros.logOff();
+                        return event.deferEdit();
+                    } else if (event.getCustomId().equals("mediaControl")) {
+                        Macros.pausePlayMedia();
+                        return event.deferEdit();
+                    } else if (event.getCustomId().equals("ShutDown")) {
+                        Macros.shutDown();
+                        return event.deferEdit();
+                    }
+                    else if (event.getCustomId().equals("versionControlButton")) {
                         VersionControl versionControl = new VersionControl(event.getInteraction().getUser().getUsername());
                         return event.reply().withEmbeds(versionControl.embedCreateSpec()).withEphemeral(true);
                     }

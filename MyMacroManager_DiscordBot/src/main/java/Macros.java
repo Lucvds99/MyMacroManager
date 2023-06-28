@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class Macros {
     private static Robot robot;
@@ -10,7 +12,6 @@ public class Macros {
     }
 
     public static void cameraChange() {
-        robot.delay(1000);
         robot.keyPress(17); // Ctrl
         robot.keyPress(16); // Shift
         robot.keyPress(33); // Page Up
@@ -51,11 +52,25 @@ public class Macros {
     }
 
     public static void logOff() {
-        robot.keyPress(524);   // Windows
-        robot.keyPress(76);    // L
-        robot.delay(500);
-        robot.keyRelease(76);  // Release L
-        robot.keyRelease(524); // Release Windows
+        String shutdownCmd = "rundll32.exe user32.dll,LockWorkStation";
+        try {
+            Process child = Runtime.getRuntime().exec(shutdownCmd);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void shutDown(){
+        String shutdownCmd = "shutdown /s -t 0";
+        try {
+            Process child = Runtime.getRuntime().exec(shutdownCmd);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void pausePlayMedia() {
+
     }
 
 }
