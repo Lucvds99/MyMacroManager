@@ -19,7 +19,6 @@ import java.util.concurrent.TimeoutException;
 
 public class Main {
     private static DiscordClient client;
-
     public static void main(String[] args) throws AWTException {
         while (true) {
             Connection connection = new Connection();
@@ -33,11 +32,10 @@ public class Main {
                     SelectMenu.Option.of("Bot Related", "Bot")
             ).withPlaceholder("Select Category").withMinValues(1).withMaxValues(1);
 
-
             new Macros();
 
             ResetText resetText = new ResetText();
-
+            
             //function buttons
             Button versionControlButton = Button.success("versionControlButton", "Version Control");
 
@@ -104,8 +102,6 @@ public class Main {
                 }).timeout(Duration.ofMinutes(30)).onErrorResume(TimeoutException.class, ignore -> Mono.empty()).then();
                 return printOnLogin.and(handlePingCommand).and(tempListener).and(MenuListener);
             });
-
-
             login.block();
         }
     }
