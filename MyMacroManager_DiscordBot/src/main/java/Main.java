@@ -1,19 +1,17 @@
-import discord4j.common.util.Snowflake;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.interaction.ButtonInteractionEvent;
+import discord4j.core.event.domain.interaction.SelectMenuInteractionEvent;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.component.ActionRow;
 import discord4j.core.object.component.Button;
+import discord4j.core.object.component.SelectMenu;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
-import discord4j.core.object.entity.channel.Channel;
-import discord4j.core.object.entity.channel.GuildMessageChannel;
-import discord4j.core.spec.EmbedCreateSpec;
-import discord4j.core.spec.MessageCreateSpec;
 import reactor.core.publisher.Mono;
 
+import javax.xml.bind.Marshaller;
 import java.awt.*;
 import java.time.Duration;
 import java.util.concurrent.TimeoutException;
@@ -21,14 +19,21 @@ import java.util.concurrent.TimeoutException;
 
 public class Main {
     private static DiscordClient client;
-    private static VersionControl versionControl = new VersionControl();
 
     public static void main(String[] args) throws AWTException {
         while (true) {
             Connection connection = new Connection();
             client = connection.client();
 
-            versionControl = new VersionControl();
+
+            //TODO turn into class
+            final SelectMenu select = SelectMenu.of("menu",
+                    SelectMenu.Option.of("Pc Related", "Pc"),
+                    SelectMenu.Option.of("OBS", "Obs"),
+                    SelectMenu.Option.of("Bot Related", "Bot")
+            ).withPlaceholder("Select Category").withMinValues(1).withMaxValues(1);
+
+
             new Macros();
 
             ResetText resetText = new ResetText();
@@ -36,6 +41,7 @@ public class Main {
             //function buttons
             Button reset = Button.primary("reset", "reset");
             Button versionControlButton = Button.success("versionControlButton", "Version Control");
+            Button menuButton = Button.success("menu", "menu");
 
             //camera buttons
             Button cameraFade = Button.secondary("cameraFade", "Camera Fade");
@@ -45,28 +51,36 @@ public class Main {
             Button switchDisplayRight = Button.secondary("switchDisplayRight", "switch display >");
             Button switchDisplayLeft = Button.secondary("switchDisplayLeft", "< switch display");
 
-
-
-
-
             Mono<Void> login = client.withGateway((GatewayDiscordClient gateway) -> {
-                // ReadyEvent example
+                // ReadyEvent
                 Mono<Void> printOnLogin = gateway.on(ReadyEvent.class, event ->
                                 Mono.fromRunnable(() -> {
                                     final User self = event.getSelf();
                                     System.out.printf("Logged in as %s#%s%n", self.getUsername(), self.getDiscriminator());
                                 }))
                         .then();
-
-                // MessageCreateEvent example
+                // MessageCreateEvent
                 Mono<Void> handlePingCommand = gateway.on(MessageCreateEvent.class, event -> {
                     Message message = event.getMessage();
 
                     if (message.getContent().equalsIgnoreCase("menu")) {
                         return message.getChannel().flatMap(messageChannel -> messageChannel.createMessage("")
-                                .withComponents(ActionRow.of(cameraFade, cameraDelay, switchDisplayLeft, switchDisplayRight ,versionControlButton), ActionRow.of(reset)));
-                    } else if (message.getContent().equalsIgnoreCase("reset")) {
-                        return message.getChannel().flatMap(messageChannel -> messageChannel.createMessage(resetText.toString()));
+                                .withComponents(ActionRow.of(cameraFade, cameraDelay, switchDisplayLeft, switchDisplayRight ,versionControlButton), ActionRow.of(reset, menuButton)));
+                    } else if (message.getContent().equalsIgnoreCase("refresh")) {
+                        return message.getChannel().flatMap(messageChannel -> messageChannel.createMessage(resetText.resetText).withComponents(ActionRow.of(select)));
+                    }
+                    return Mono.empty();
+                }).then();
+
+                Mono<Void> MenuListener = gateway.on(SelectMenuInteractionEvent.class, event -> {
+                    if (event.getCustomId().equals("menu")) {
+                        if (event.getValues().get(0).equals("Pc")) {
+                            return event.reply(resetText.resetText).withComponents(ActionRow.of(switchDisplayLeft, switchDisplayRight), ActionRow.of(menuButton)).then();
+                        } else if (event.getValues().get(0).equals("Obs")) {
+                            return event.reply(resetText.resetText).withComponents(ActionRow.of(cameraFade, cameraDelay), ActionRow.of(menuButton)).then();
+                        } else if ( event.getValues().get(0).equals("Bot")) {
+                            return event.reply(resetText.resetText).withComponents(ActionRow.of(versionControlButton), ActionRow.of(menuButton)).then();
+                        }
                     }
                     return Mono.empty();
                 }).then();
@@ -87,15 +101,21 @@ public class Main {
                         Macros.cameraDelay();
                         return event.deferEdit();
                     } else if (event.getCustomId().equals("reset")) {
-                        return event.reply(resetText.resetText).withComponents(ActionRow.of(cameraFade, cameraDelay, switchDisplayLeft, switchDisplayRight ,versionControlButton), ActionRow.of(reset));
+                        return event.reply(resetText.resetText).withComponents(ActionRow.of(select));
                     } else if (event.getCustomId().equals("versionControlButton")) {
+                        VersionControl versionControl = new VersionControl(event.getInteraction().getUser().getUsername());
                         return event.reply().withEmbeds(versionControl.embedCreateSpec()).withEphemeral(true);
-                    } else {
+                    } else if (event.getCustomId().equals("menu")) {
+                        return event.reply(resetText.resetText).withComponents(ActionRow.of(select));
+                    }
+                    else {
                         return Mono.empty();
                     }
                 }).timeout(Duration.ofMinutes(30)).onErrorResume(TimeoutException.class, ignore -> Mono.empty()).then();
-                return printOnLogin.and(handlePingCommand).and(tempListener);
+                return printOnLogin.and(handlePingCommand).and(tempListener).and(MenuListener);
             });
+
+
             login.block();
         }
     }
