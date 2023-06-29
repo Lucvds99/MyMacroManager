@@ -113,8 +113,10 @@ public class Main {
                     } else if (event.getCustomId().equals("ShutDown")) {
                         Macros.shutDown();
                         return event.deferEdit();
-                    }
-                    else if (event.getCustomId().equals("versionControlButton")) {
+                    } else if (event.getCustomId().equals("mediaControl")) {
+                        Macros.pausePlayMedia();
+                        return event.deferEdit();
+                    } else if (event.getCustomId().equals("versionControlButton")) {
                         VersionControl versionControl = new VersionControl(event.getInteraction().getUser().getUsername());
                         return event.reply().withEmbeds(versionControl.embedCreateSpec()).withEphemeral(true);
                     }
