@@ -17,7 +17,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.concurrent.TimeoutException;
 
-//TODO fix Button not responding after a long time being active problem. (maybe a timeout?)
+
+//TODO: add reconnect Button that basically restarts the bot;
 
 public class Main {
     private static DiscordClient client;
