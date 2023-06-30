@@ -14,7 +14,7 @@ application {
 shadowJar {
     archiveBaseName.set('MacroManager')
     archiveVersion.set('1.2.3')
-    archiveClassifier.set('')
+    archiveClassifier.set('SNAPSHOT')
 }
 
 repositories {
