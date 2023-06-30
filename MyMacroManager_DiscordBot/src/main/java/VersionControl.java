@@ -14,7 +14,7 @@ public class VersionControl {
                 .author("Created by: Double",null, null)
                 .thumbnail("https://cdn.discordapp.com/avatars/564839474249334807/a_05f1000abae0486262310f60441d09eb.gif")
                 .addField("User: ",  username, false)
-                .description("Version 1.2.3 - SNAPSHOT")
+                .description("Version 1.3.1")
                 .addField("discord4j", "3.3.0-M2", true)
                 .addField("Shadow-Run", "8.1.1", true)
                 .addField("logback", "1.2.12", true)
