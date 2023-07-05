@@ -26,7 +26,6 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'com.discord4j:discord4j-core:3.3.0-M2'
     implementation 'ch.qos.logback:logback-classic:1.2.12'
-
 }
 
 test {

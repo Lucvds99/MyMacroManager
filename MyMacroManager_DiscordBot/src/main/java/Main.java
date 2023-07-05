@@ -9,6 +9,7 @@ import discord4j.core.object.component.Button;
 import discord4j.core.object.component.SelectMenu;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
+import discord4j.core.object.reaction.ReactionEmoji;
 import reactor.core.publisher.Mono;
 
 import javax.xml.bind.Marshaller;
@@ -34,6 +35,7 @@ public class Main {
                 //TODO turn into class
                 final SelectMenu select = SelectMenu.of("menu",
                         SelectMenu.Option.of("Pc Related", "Pc"),
+                        SelectMenu.Option.of("Media Control", "Media"),
                         SelectMenu.Option.of("OBS", "Obs"),
                         SelectMenu.Option.of("Bot Related", "Bot"),
                         SelectMenu.Option.of("Secured Selection", "securedSelection")
@@ -54,14 +56,23 @@ public class Main {
                 //control buttons
                 Button switchDisplayRight = Button.primary("switchDisplayRight", "switch display >");
                 Button switchDisplayLeft = Button.primary("switchDisplayLeft", "< switch display");
-                Button mediaControl = Button.primary("mediaControl", "pause/play");
 
+                //media buttons
+                ReactionEmoji skipEmoji = ReactionEmoji.unicode("\u23ED");
+                ReactionEmoji playPauseEmoji = ReactionEmoji.unicode("\u23EF");
+                ReactionEmoji backEmoji = ReactionEmoji.unicode("\u23EE");
+                ReactionEmoji volumeUpEmoji = ReactionEmoji.of(null, "\uD83D\uDD0A", false);
+                ReactionEmoji volumeDownEmoji = ReactionEmoji.of(null, "\uD83D\uDD08", false);
+
+                Button forward = Button.secondary("forward", skipEmoji);
+                Button playPause = Button.secondary("playPause", playPauseEmoji);
+                Button back = Button.secondary("back", backEmoji);
+                Button volumeUp = Button.secondary("volumeUp", volumeUpEmoji);
+                Button volumeDown = Button.secondary("volumeDown", volumeDownEmoji);
 
                 //Secure Buttons
                 Button logOff = Button.danger("logOff", "Lock");
                 Button ShutDown = Button.danger("ShutDown", "Shut Down");
-
-
 
 
                 Mono<Void> login = client.withGateway((GatewayDiscordClient gateway) -> {
@@ -86,9 +97,11 @@ public class Main {
                     Mono<Void> MenuListener = gateway.on(SelectMenuInteractionEvent.class, event -> {
                         if (event.getCustomId().equals("menu")) {
                             if (event.getValues().get(0).equals("Pc")) {
-                                return event.reply(resetText.resetText).withComponents(ActionRow.of(switchDisplayLeft, switchDisplayRight, mediaControl), ActionRow.of(select)).then();
+                                return event.reply(resetText.resetText).withComponents(ActionRow.of(switchDisplayLeft, switchDisplayRight), ActionRow.of(select)).then();
                             } else if (event.getValues().get(0).equals("Obs")) {
                                 return event.reply(resetText.resetText).withComponents(ActionRow.of(cameraFade, cameraDelay), ActionRow.of(select)).then();
+                            } else if (event.getValues().get(0).equals("Media")) {
+                                return event.reply(resetText.resetText).withComponents(ActionRow.of(back,playPause,forward),ActionRow.of(volumeUp, volumeDown), ActionRow.of(select)).then();
                             } else if ( event.getValues().get(0).equals("Bot")) {
                                 return event.reply(resetText.resetText).withComponents(ActionRow.of(versionControlButton), ActionRow.of(select)).then();
                             } else if (event.getValues().get(0).equals("securedSelection")) {
@@ -116,14 +129,26 @@ public class Main {
                         } else if (event.getCustomId().equals("logOff")) {
                             Macros.logOff();
                             return event.deferEdit();
-                        } else if (event.getCustomId().equals("mediaControl")) {
+                        } else if (event.getCustomId().equals("playPause")) {
                             Macros.pausePlayMedia();
                             return event.deferEdit();
                         } else if (event.getCustomId().equals("ShutDown")) {
                             Macros.shutDown();
                             return event.deferEdit();
-                        } else if (event.getCustomId().equals("mediaControl")) {
+                        } else if (event.getCustomId().equals("back")) {
+                            Macros.back();
+                            return event.deferEdit();
+                        } else if (event.getCustomId().equals("forward")) {
+                            Macros.forward();
+                            return event.deferEdit();
+                        } else if (event.getCustomId().equals("playPause")) {
                             Macros.pausePlayMedia();
+                            return event.deferEdit();
+                        } else if (event.getCustomId().equals("volumeUp")) {
+                            Macros.volumeUp();
+                            return event.deferEdit();
+                        } else if (event.getCustomId().equals("volumeDown")) {
+                            Macros.volumeDown();
                             return event.deferEdit();
                         } else if (event.getCustomId().equals("versionControlButton")) {
                             VersionControl versionControl = new VersionControl(event.getInteraction().getUser().getUsername());

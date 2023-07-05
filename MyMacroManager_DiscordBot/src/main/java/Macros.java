@@ -74,4 +74,29 @@ public class Macros {
     public static void pausePlayMedia() {
         commands.MediaKeys.songPlayPause();
     }
+
+    public static void volumeUp() {
+        commands.MediaKeys.volumeUp();
+        commands.MediaKeys.volumeUp();
+        commands.MediaKeys.volumeUp();
+        commands.MediaKeys.volumeUp();
+        commands.MediaKeys.volumeUp();
+        commands.MediaKeys.volumeUp();
+    }
+    public static void volumeDown() {
+        commands.MediaKeys.volumeDown();
+        commands.MediaKeys.volumeDown();
+        commands.MediaKeys.volumeDown();
+        commands.MediaKeys.volumeDown();
+        commands.MediaKeys.volumeDown();
+        commands.MediaKeys.volumeDown();
+    }
+
+    public static void back() {
+        commands.MediaKeys.songPrevious();
+    }
+
+    public static void forward() {
+        commands.MediaKeys.songNext();
+    }
 }
