@@ -1,3 +1,5 @@
+import commands.MediaKeys;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -70,8 +72,6 @@ public class Macros {
     }
 
     public static void pausePlayMedia() {
-        robot.keyPress(KeyEvent.VK_PAUSE); // Play/Pause
-        robot.delay(500);
-        robot.keyRelease(KeyEvent.VK_PAUSE); // Release Play/Pause
+        commands.MediaKeys.songPlayPause();
     }
 }

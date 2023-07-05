@@ -54,7 +54,7 @@ public class Main {
                 //control buttons
                 Button switchDisplayRight = Button.primary("switchDisplayRight", "switch display >");
                 Button switchDisplayLeft = Button.primary("switchDisplayLeft", "< switch display");
-                Button mediaControl = Button.primary("mediaControl", "Media Control");
+                Button mediaControl = Button.primary("mediaControl", "pause/play");
 
 
                 //Secure Buttons
