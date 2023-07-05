@@ -63,7 +63,7 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\MacroManager-1.3.1.jar
+set CLASSPATH=%APP_HOME%\lib\MacroManager-1.3.2.jar
 
 @rem Execute MyMacroManager_DiscordBot
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %MY_MACRO_MANAGER_DISCORD_BOT_OPTS%  -jar "%CLASSPATH%" %CMD_LINE_ARGS%
