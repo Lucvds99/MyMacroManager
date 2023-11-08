@@ -96,16 +96,17 @@ public class Main {
 
                     Mono<Void> MenuListener = gateway.on(SelectMenuInteractionEvent.class, event -> {
                         if (event.getCustomId().equals("menu")) {
-                            if (event.getValues().get(0).equals("Pc")) {
-                                return event.reply(resetText.resetText).withComponents(ActionRow.of(switchDisplayLeft, switchDisplayRight), ActionRow.of(select)).then();
-                            } else if (event.getValues().get(0).equals("Obs")) {
-                                return event.reply(resetText.resetText).withComponents(ActionRow.of(cameraFade, cameraDelay), ActionRow.of(select)).then();
-                            } else if (event.getValues().get(0).equals("Media")) {
-                                return event.reply(resetText.resetText).withComponents(ActionRow.of(back,playPause,forward),ActionRow.of(volumeUp, volumeDown), ActionRow.of(select)).then();
-                            } else if ( event.getValues().get(0).equals("Bot")) {
-                                return event.reply(resetText.resetText).withComponents(ActionRow.of(versionControlButton), ActionRow.of(select)).then();
-                            } else if (event.getValues().get(0).equals("securedSelection")) {
-                                return event.reply(resetText.resetText).withComponents(ActionRow.of(logOff, ShutDown), ActionRow.of(select)).then();
+                            switch (event.getValues().get(0)) {
+                                case "Pc":
+                                    return event.reply(resetText.resetText).withComponents(ActionRow.of(switchDisplayLeft, switchDisplayRight), ActionRow.of(select)).then();
+                                case "Obs":
+                                    return event.reply(resetText.resetText).withComponents(ActionRow.of(cameraFade, cameraDelay), ActionRow.of(select)).then();
+                                case "Media":
+                                    return event.reply(resetText.resetText).withComponents(ActionRow.of(back, playPause, forward), ActionRow.of(volumeUp, volumeDown), ActionRow.of(select)).then();
+                                case "Bot":
+                                    return event.reply(resetText.resetText).withComponents(ActionRow.of(versionControlButton), ActionRow.of(select)).then();
+                                case "securedSelection":
+                                    return event.reply(resetText.resetText).withComponents(ActionRow.of(logOff, ShutDown), ActionRow.of(select)).then();
                             }
                         }
                         return Mono.empty();

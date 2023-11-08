@@ -15,41 +15,17 @@ public class MediaKeys {
 	static {
 		System.loadLibrary("MediaKeys");
 	}
-	
-	
-	
+
 	public static native void volumeMute();
-	
 	public static native void volumeDown();
-	
 	public static native void volumeUp();
-	
-	
 	public static native void songPrevious();
-	
 	public static native void songNext();
-	
 	public static native void songPlayPause();
-
-
 	public static native void mediaStop();
 	
 	
 	public static void main(String[] args) {
-
-		//volumeMute();
-		
-		//volumeDown();
-		
-		//volumeUp();
-		
-		
-		//songPrevious();
-		
-		//songNext();
-		
-		//songPlayPause();
-
 		int temp = Integer.parseInt(args[0]);
 		switch (temp) {
 			case 0:
@@ -74,7 +50,5 @@ public class MediaKeys {
 				mediaStop();
 				break;
 		}
-		
 	}
-
 }
