@@ -1,3 +1,4 @@
+import discord4j.common.util.Snowflake;
 import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.interaction.ButtonInteractionEvent;
@@ -10,26 +11,43 @@ import discord4j.core.object.component.SelectMenu;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.reaction.ReactionEmoji;
+import discord4j.voice.json.Heartbeat;
+import discord4j.voice.json.HeartbeatAck;
 import reactor.core.publisher.Mono;
+
 
 import javax.xml.bind.Marshaller;
 import java.awt.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 
 //TODO: add reconnect Button that basically restarts the bot;
 
+
+
 public class Main {
+
+
     private static DiscordClient client;
+
+
     public static void main(String[] args) throws AWTException {
+
         while (true) {
             try {
+                String UserId;
                 Connection connection = new Connection();
+                UserId = connection.UserId();
                 client = connection.client();
                 client.login();
                 client.gateway().login();
+
 
 
                 //TODO turn into class
@@ -75,24 +93,35 @@ public class Main {
                 Button ShutDown = Button.danger("ShutDown", "Shut Down");
 
 
+                InetAddress addr = InetAddress.getLocalHost();
+
+
+
                 Mono<Void> login = client.withGateway((GatewayDiscordClient gateway) -> {
-                    // ReadyEvent
+                    Mono<Void> sendStartupMessage = gateway.on(ReadyEvent.class, event -> {
+                        final User self = event.getSelf();
+                        String messageContent = getComputerName()+ ": Connected";
+                        System.out.printf("Logged in as %s#%s%n", self.getUsername(), self.getDiscriminator());
+                        // Send a direct message to your user
+                        if (!UserId.equals("")){
+                            return gateway
+                                    .getUserById(Snowflake.of(UserId))
+                                    .flatMap(user -> user.getPrivateChannel())
+                                    .flatMap(privateChannel -> privateChannel.createMessage(messageContent))
+                                    .then();
+                        }
+                        return Mono.empty();
+                    }).then();
 
-
-                    Mono<Void> printOnLogin = gateway.on(ReadyEvent.class, event ->
-                                    Mono.fromRunnable(() -> {
-                                        final User self = event.getSelf();
-                                        System.out.printf("Logged in as %s#%s%n", self.getUsername(), self.getDiscriminator());
-                                    }))
-                            .then();
-                    // MessageCreateEvent
                     Mono<Void> handlePingCommand = gateway.on(MessageCreateEvent.class, event -> {
                         Message message = event.getMessage();
-                        if (message.getContent().equalsIgnoreCase("refresh")) {
+                        if (message.getContent().equalsIgnoreCase("refresh") || message.getContent().equalsIgnoreCase("r")) {
                             return message.getChannel().flatMap(messageChannel -> messageChannel.createMessage(resetText.resetText).withComponents(ActionRow.of(select)));
                         }
                         return Mono.empty();
                     }).then();
+
+
 
                     Mono<Void> MenuListener = gateway.on(SelectMenuInteractionEvent.class, event -> {
                         if (event.getCustomId().equals("menu")) {
@@ -156,12 +185,26 @@ public class Main {
                                 return Mono.empty();
                         }
                     }).onErrorResume(TimeoutException.class, ignore -> Mono.empty()).then();
-                    return printOnLogin.and(handlePingCommand).and(tempListener).and(MenuListener);
+                    return sendStartupMessage.and(handlePingCommand).and(tempListener).and(MenuListener);
                 });
                 login.block();
             } catch (AWTException e) {
                 e.printStackTrace();
+            } catch (UnknownHostException e) {
+                throw new RuntimeException(e);
             }
         }
     }
+    private static String getComputerName()
+    {
+        Map<String, String> env = System.getenv();
+        if (env.containsKey("COMPUTERNAME"))
+            return env.get("COMPUTERNAME");
+        else if (env.containsKey("HOSTNAME"))
+            return env.get("HOSTNAME");
+        else
+            return "Unknown Computer";
+    }
 }
+
+

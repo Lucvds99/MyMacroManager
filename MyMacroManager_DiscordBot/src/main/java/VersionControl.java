@@ -10,7 +10,7 @@ public class VersionControl {
         embedCreateSpec =  EmbedCreateSpec.builder()
                 .color(Color.DEEP_LILAC)
                 .title("Macro Manager")
-                .author("Created by: Double",null, null)
+                .author("Created by: the_Double",null, null)
                 .thumbnail("https://cdn.discordapp.com/avatars/564839474249334807/a_05f1000abae0486262310f60441d09eb.gif")
                 .addField("User: ",  username, false)
                 .description("Version 1.3.3")
