@@ -114,48 +114,45 @@ public class Main {
                     Mono<Void> tempListener = gateway.on(ButtonInteractionEvent.class, event -> {
                         System.out.println(event.getCustomId());
 
-                        if (event.getCustomId().equals("cameraFade")) {
-                            Macros.cameraChange();
-                            return event.deferEdit();
-                        } else if (event.getCustomId().equals("switchDisplayRight")) {
-                            Macros.switchDisplayRight();
-                            return event.deferEdit();
-                        } else if (event.getCustomId().equals("switchDisplayLeft")) {
-                            Macros.switchDisplayLeft();
-                            return event.deferEdit();
-                        } else if (event.getCustomId().equals("cameraDelay")) {
-                            Macros.cameraDelay();
-                            return event.deferEdit();
-                        } else if (event.getCustomId().equals("logOff")) {
-                            Macros.logOff();
-                            return event.deferEdit();
-                        } else if (event.getCustomId().equals("playPause")) {
-                            Macros.pausePlayMedia();
-                            return event.deferEdit();
-                        } else if (event.getCustomId().equals("ShutDown")) {
-                            Macros.shutDown();
-                            return event.deferEdit();
-                        } else if (event.getCustomId().equals("back")) {
-                            Macros.back();
-                            return event.deferEdit();
-                        } else if (event.getCustomId().equals("forward")) {
-                            Macros.forward();
-                            return event.deferEdit();
-                        } else if (event.getCustomId().equals("playPause")) {
-                            Macros.pausePlayMedia();
-                            return event.deferEdit();
-                        } else if (event.getCustomId().equals("volumeUp")) {
-                            Macros.volumeUp();
-                            return event.deferEdit();
-                        } else if (event.getCustomId().equals("volumeDown")) {
-                            Macros.volumeDown();
-                            return event.deferEdit();
-                        } else if (event.getCustomId().equals("versionControlButton")) {
-                            VersionControl versionControl = new VersionControl(event.getInteraction().getUser().getUsername());
-                            return event.reply().withEmbeds(versionControl.embedCreateSpec()).withEphemeral(true);
-                        }
-                        else {
-                            return Mono.empty();
+                        switch (event.getCustomId()) {
+                            case "cameraFade":
+                                Macros.cameraChange();
+                                return event.deferEdit();
+                            case "switchDisplayRight":
+                                Macros.switchDisplayRight();
+                                return event.deferEdit();
+                            case "switchDisplayLeft":
+                                Macros.switchDisplayLeft();
+                                return event.deferEdit();
+                            case "cameraDelay":
+                                Macros.cameraDelay();
+                                return event.deferEdit();
+                            case "logOff":
+                                Macros.logOff();
+                                return event.deferEdit();
+                            case "playPause":
+                                Macros.pausePlayMedia();
+                                return event.deferEdit();
+                            case "ShutDown":
+                                Macros.shutDown();
+                                return event.deferEdit();
+                            case "back":
+                                Macros.back();
+                                return event.deferEdit();
+                            case "forward":
+                                Macros.forward();
+                                return event.deferEdit();
+                            case "volumeUp":
+                                Macros.volumeUp();
+                                return event.deferEdit();
+                            case "volumeDown":
+                                Macros.volumeDown();
+                                return event.deferEdit();
+                            case "versionControlButton":
+                                VersionControl versionControl = new VersionControl(event.getInteraction().getUser().getUsername());
+                                return event.reply().withEmbeds(versionControl.embedCreateSpec()).withEphemeral(true);
+                            default:
+                                return Mono.empty();
                         }
                     }).onErrorResume(TimeoutException.class, ignore -> Mono.empty()).then();
                     return printOnLogin.and(handlePingCommand).and(tempListener).and(MenuListener);
