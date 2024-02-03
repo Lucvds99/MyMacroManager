@@ -1,15 +1,13 @@
-import commands.MediaKeys;
-
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 public class Macros {
     private static Robot robot;
+    private static Connection connection;
 
 
-    protected Macros() throws AWTException {
-
+    protected Macros(Connection connection) throws AWTException {
+        this.connection = connection;
         robot = new Robot();
     }
 
@@ -72,31 +70,31 @@ public class Macros {
     }
 
     public static void pausePlayMedia() {
-        commands.MediaKeys.songPlayPause();
+        MediaKeys.songPlayPause(connection);
     }
 
     public static void volumeUp() {
-        commands.MediaKeys.volumeUp();
-        commands.MediaKeys.volumeUp();
-        commands.MediaKeys.volumeUp();
-        commands.MediaKeys.volumeUp();
-        commands.MediaKeys.volumeUp();
-        commands.MediaKeys.volumeUp();
+        MediaKeys.volumeUp(connection);
+        MediaKeys.volumeUp(connection);
+        MediaKeys.volumeUp(connection);
+        MediaKeys.volumeUp(connection);
+        MediaKeys.volumeUp(connection);
+        MediaKeys.volumeUp(connection);
     }
     public static void volumeDown() {
-        commands.MediaKeys.volumeDown();
-        commands.MediaKeys.volumeDown();
-        commands.MediaKeys.volumeDown();
-        commands.MediaKeys.volumeDown();
-        commands.MediaKeys.volumeDown();
-        commands.MediaKeys.volumeDown();
+        MediaKeys.volumeDown(connection);
+        MediaKeys.volumeDown(connection);
+        MediaKeys.volumeDown(connection);
+        MediaKeys.volumeDown(connection);
+        MediaKeys.volumeDown(connection);
+        MediaKeys.volumeDown(connection);
     }
 
     public static void back() {
-        commands.MediaKeys.songPrevious();
+        MediaKeys.songPrevious(connection);
     }
 
     public static void forward() {
-        commands.MediaKeys.songNext();
+        MediaKeys.songNext(connection);
     }
 }

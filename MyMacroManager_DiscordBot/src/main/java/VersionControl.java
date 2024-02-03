@@ -16,7 +16,7 @@ public class VersionControl {
                 .description("Version 1.4.0")
                 .addField("discord4j", "3.3.0-M2", true)
                 .addField("Shadow-Run", "8.1.1", true)
-                .addField("java-media-keys", "nsnave on github", true)
+                .addField("AutoHotKey", "V2", true)
                 .addField("logback", "1.3.7", true)
                 .image("https://images.squarespace-cdn.com/content/v1/5f3086ffb5573e1a11f7dc18/1611617447555-FVY71KV3JB0YX0VPXKQS/YDMK+Macro.jpg")
                 .footer("Version Date: ", null)

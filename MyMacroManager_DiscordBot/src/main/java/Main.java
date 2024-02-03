@@ -60,7 +60,7 @@ public class Main {
                 ).withPlaceholder("Select Category").withMinValues(1).withMaxValues(1);
 
 
-                new Macros();
+                new Macros(connection);
 
                 ResetText resetText = new ResetText();
 
