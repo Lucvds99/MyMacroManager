@@ -1,1 +1,0 @@
-Send "{Volume_Mute}"
