@@ -37,7 +37,7 @@ public class Main {
     private static DiscordClient client;
 
 
-    public static void main(String[] args) throws AWTException {
+    public static void main(String[] args) {
 
         while (true) {
             try {

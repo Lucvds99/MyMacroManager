@@ -1,24 +1,3 @@
 Manifest-Version: 1.0
 Main-Class: Main
-Class-Path: Servicer-1.0.3.jar junit-jupiter-api-5.8.1.jar discord4j-gat
- eway-3.2.3.jar discord4j-common-3.2.3.jar error_prone_annotations-2.4.0
- .jar netty-resolver-4.1.79.Final.jar slf4j-api-1.7.32.jar jackson-datat
- ype-jdk8-2.12.7.jar discord4j-voice-3.2.3.jar netty-handler-proxy-4.1.7
- 9.Final.jar netty-handler-4.1.79.Final.jar reactor-core-3.4.22.jar nett
- y-transport-4.1.79.Final.jar junit-platform-engine-1.8.1.jar discord-js
- on-1.6.13.jar netty-resolver-dns-4.1.79.Final.jar reactive-streams-1.0.
- 4.jar reactor-extra-3.4.8.jar netty-codec-4.1.79.Final.jar netty-codec-
- socks-4.1.79.Final.jar netty-resolver-dns-classes-macos-4.1.79.Final.ja
- r stores-jdk-3.2.1.jar discord-json-api-1.6.13.jar netty-codec-http2-4.
- 1.79.Final.jar logback-classic-1.2.12.jar netty-codec-dns-4.1.79.Final.
- jar logback-core-1.2.12.jar discord4j-rest-3.2.3.jar jackson-annotation
- s-2.12.7.jar junit-jupiter-engine-5.8.1.jar opentest4j-1.2.0.jar jackso
- n-core-2.12.7.jar netty-buffer-4.1.79.Final.jar netty-transport-classes
- -epoll-4.1.79.Final.jar netty-resolver-dns-native-macos-4.1.79.Final-os
- x-x86_64.jar netty-transport-native-unix-common-4.1.79.Final.jar stores
- -api-3.2.1.jar discord4j-core-3.2.3.jar caffeine-2.8.8.jar reactor-nett
- y-core-1.0.22.jar netty-codec-http-4.1.79.Final.jar reactor-netty-http-
- 1.0.22.jar jackson-databind-2.12.7.jar netty-transport-native-epoll-4.1
- .79.Final-linux-x86_64.jar netty-common-4.1.79.Final.jar simple-fsm-1.0
- .1.jar checker-qual-3.8.0.jar junit-platform-commons-1.8.1.jar
 
