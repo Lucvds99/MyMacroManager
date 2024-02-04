@@ -26,5 +26,6 @@
 - This application runs without a UI. Either run and close it via Task Manager or run it in console mode.
  `java -jar MacroController-1.4.0.jar`
 - Optionally, place the Jar file in `shell:startup` to start the bot automatically with every PC startup.
+- Type R or restart to visualize the menu and pick a category to control ur PC or Laptop
 
 Now, you can control your PC remotely using Discord! This setup enables features like pausing and playing media on your device using AutoHotkey commands. You will also be able to remotely change to Multiple Desktops and access shortcuts for OBS Camera. These features will be user-specific however and won't impact your OBS if you did not download a Shortcut Tool. 
