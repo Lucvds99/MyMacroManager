@@ -18,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 import javax.xml.bind.Marshaller;
 import java.awt.*;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.Duration;
@@ -56,6 +57,7 @@ public class Main {
                         SelectMenu.Option.of("Media Control", "Media"),
                         SelectMenu.Option.of("OBS", "Obs"),
                         SelectMenu.Option.of("Bot Related", "Bot"),
+                        SelectMenu.Option.of("Graphic", "Graphic"),
                         SelectMenu.Option.of("Secured Selection", "securedSelection")
                 ).withPlaceholder("Select Category").withMinValues(1).withMaxValues(1);
 
@@ -87,6 +89,9 @@ public class Main {
                 Button back = Button.secondary("back", backEmoji);
                 Button volumeUp = Button.secondary("volumeUp", volumeUpEmoji);
                 Button volumeDown = Button.secondary("volumeDown", volumeDownEmoji);
+
+                //Graphical buttons
+                Button screenshot = Button.primary("screenshot", "Screen shot");
 
                 //Secure Buttons
                 Button logOff = Button.danger("logOff", "Lock");
@@ -134,6 +139,8 @@ public class Main {
                                     return event.reply(resetText.resetText).withComponents(ActionRow.of(back, playPause, forward), ActionRow.of(volumeUp, volumeDown), ActionRow.of(select)).then();
                                 case "Bot":
                                     return event.reply(resetText.resetText).withComponents(ActionRow.of(versionControlButton), ActionRow.of(select)).then();
+                                case "Graphic":
+                                    return event.reply(resetText.resetText).withComponents(ActionRow.of(screenshot), ActionRow.of(select)).then();
                                 case "securedSelection":
                                     return event.reply(resetText.resetText).withComponents(ActionRow.of(logOff, ShutDown), ActionRow.of(select)).then();
                             }
@@ -145,6 +152,17 @@ public class Main {
                         System.out.println(event.getCustomId());
 
                         switch (event.getCustomId()) {
+                            case "screenshot":
+                                // Take a screenshot
+                                try {
+                                    Graphic.takeScreenshot();
+                                    // Respond to the interaction indicating success
+                                    return event.reply("Screenshot captured!").then();
+                                } catch (AWTException | IOException e) {
+                                    e.printStackTrace();
+                                    // Respond to the interaction indicating failure
+                                    return event.reply("Failed to capture screenshot.").then();
+                                }
                             case "cameraFade":
                                 Macros.cameraChange();
                                 return event.deferEdit();
