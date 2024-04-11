@@ -120,7 +120,7 @@ public class Main {
 
                     Mono<Void> handlePingCommand = gateway.on(MessageCreateEvent.class, event -> {
                         Message message = event.getMessage();
-                        if (message.getContent().equalsIgnoreCase("refresh") || message.getContent().equalsIgnoreCase("r")) {
+                        if (message.getContent().equalsIgnoreCase("r")) {
                             return message.getChannel().flatMap(messageChannel -> messageChannel.createMessage(resetText.resetText).withComponents(ActionRow.of(select)));
                         }
                         return Mono.empty();
