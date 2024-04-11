@@ -98,7 +98,7 @@ public class Main {
                 Button ShutDown = Button.danger("ShutDown", "Shut Down");
 
 
-                InetAddress addr = InetAddress.getLocalHost();
+
 
 
 
@@ -112,7 +112,7 @@ public class Main {
                             return gateway
                                     .getUserById(Snowflake.of(UserId))
                                     .flatMap(User::getPrivateChannel)
-                                    .flatMap(privateChannel -> privateChannel.createMessage(messageContent))
+                                    .flatMap(privateChannel -> privateChannel.createMessage(messageContent).withComponents(ActionRow.of(select)))
                                     .then();
                         }
                         return Mono.empty();
@@ -208,8 +208,6 @@ public class Main {
                 login.block();
             } catch (AWTException e) {
                 e.printStackTrace();
-            } catch (UnknownHostException e) {
-                throw new RuntimeException(e);
             }
         }
     }
