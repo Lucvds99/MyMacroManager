@@ -10,7 +10,7 @@ MyMacroManager_DiscordBot/build/libs
 .idea/**/shelf
 
 # Jar files
-# *.jar
+*.jar
 
 # AWS User-specific
 .idea/**/aws.xml
