@@ -24,7 +24,7 @@
 ## Usage
 
 - This application runs without a UI. Either run and close it via Task Manager or run it in console mode.
- `java -jar MacroController-1.4.0.jar`
+ `java -jar MacroController-version.jar`
 - Optionally, place the Jar file in `shell:startup` to start the bot automatically with every PC startup.
 - Type R or restart to visualize the menu and pick a category to control ur PC or Laptop
 
