@@ -1,11 +1,21 @@
+import discord4j.common.ReactorResources;
 import discord4j.core.DiscordClient;
+import discord4j.core.DiscordClientBuilder;
+import reactor.netty.http.client.HttpClient;
+
 public class Connection {
     private final DiscordClient client;
     private final String UserId;
     private final String AutoHotKeyLocation;
     public Connection() {
         //this is ur bots Private key.
-        client = DiscordClient.create("");
+        client = DiscordClientBuilder.create("Token")
+                .setReactorResources(ReactorResources.builder()
+                        .httpClient(HttpClient.create()
+                                .compress(true)
+                                .keepAlive(false)
+                                .followRedirect(true).secure())
+                        .build()).build();
 
         //UserId can be found by turning on developer mode In discord, clicking ur own profile and copying ur user ID, there will be a button at the bottom.
         //UserId is not needed, If you don't want to use the function to show you which device is connected there is no need.

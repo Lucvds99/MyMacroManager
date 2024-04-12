@@ -18,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 import javax.xml.bind.Marshaller;
 import java.awt.*;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.Duration;
@@ -56,6 +57,7 @@ public class Main {
                         SelectMenu.Option.of("Media Control", "Media"),
                         SelectMenu.Option.of("OBS", "Obs"),
                         SelectMenu.Option.of("Bot Related", "Bot"),
+                        SelectMenu.Option.of("Graphic", "Graphic"),
                         SelectMenu.Option.of("Secured Selection", "securedSelection")
                 ).withPlaceholder("Select Category").withMinValues(1).withMaxValues(1);
 
@@ -88,12 +90,15 @@ public class Main {
                 Button volumeUp = Button.secondary("volumeUp", volumeUpEmoji);
                 Button volumeDown = Button.secondary("volumeDown", volumeDownEmoji);
 
+                //Graphical buttons
+                Button screenshot = Button.primary("screenshot", "Screen shot");
+
                 //Secure Buttons
                 Button logOff = Button.danger("logOff", "Lock");
                 Button ShutDown = Button.danger("ShutDown", "Shut Down");
 
 
-                InetAddress addr = InetAddress.getLocalHost();
+
 
 
 
@@ -107,7 +112,7 @@ public class Main {
                             return gateway
                                     .getUserById(Snowflake.of(UserId))
                                     .flatMap(User::getPrivateChannel)
-                                    .flatMap(privateChannel -> privateChannel.createMessage(messageContent))
+                                    .flatMap(privateChannel -> privateChannel.createMessage(messageContent).withComponents(ActionRow.of(select)))
                                     .then();
                         }
                         return Mono.empty();
@@ -115,7 +120,7 @@ public class Main {
 
                     Mono<Void> handlePingCommand = gateway.on(MessageCreateEvent.class, event -> {
                         Message message = event.getMessage();
-                        if (message.getContent().equalsIgnoreCase("refresh") || message.getContent().equalsIgnoreCase("r")) {
+                        if (message.getContent().equalsIgnoreCase("r")) {
                             return message.getChannel().flatMap(messageChannel -> messageChannel.createMessage(resetText.resetText).withComponents(ActionRow.of(select)));
                         }
                         return Mono.empty();
@@ -134,6 +139,8 @@ public class Main {
                                     return event.reply(resetText.resetText).withComponents(ActionRow.of(back, playPause, forward), ActionRow.of(volumeUp, volumeDown), ActionRow.of(select)).then();
                                 case "Bot":
                                     return event.reply(resetText.resetText).withComponents(ActionRow.of(versionControlButton), ActionRow.of(select)).then();
+                                case "Graphic":
+                                    return event.reply(resetText.resetText).withComponents(ActionRow.of(screenshot), ActionRow.of(select)).then();
                                 case "securedSelection":
                                     return event.reply(resetText.resetText).withComponents(ActionRow.of(logOff, ShutDown), ActionRow.of(select)).then();
                             }
@@ -142,9 +149,21 @@ public class Main {
                     }).then();
 
                     Mono<Void> tempListener = gateway.on(ButtonInteractionEvent.class, event -> {
+                        User user = event.getInteraction().getUser();
                         System.out.println(event.getCustomId());
 
                         switch (event.getCustomId()) {
+                            case "screenshot":
+                                // Take a screenshot
+                                try {
+                                    Graphic.takeScreenshot(user);
+                                    // Respond to the interaction indicating success
+                                    return event.reply("Screenshot captured!").then();
+                                } catch (AWTException | IOException e) {
+                                    e.printStackTrace();
+                                    // Respond to the interaction indicating failure
+                                    return event.reply("Failed to capture screenshot.").then();
+                                }
                             case "cameraFade":
                                 Macros.cameraChange();
                                 return event.deferEdit();
@@ -190,8 +209,6 @@ public class Main {
                 login.block();
             } catch (AWTException e) {
                 e.printStackTrace();
-            } catch (UnknownHostException e) {
-                throw new RuntimeException(e);
             }
         }
     }
