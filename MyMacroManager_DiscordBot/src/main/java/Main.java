@@ -149,13 +149,14 @@ public class Main {
                     }).then();
 
                     Mono<Void> tempListener = gateway.on(ButtonInteractionEvent.class, event -> {
+                        User user = event.getInteraction().getUser();
                         System.out.println(event.getCustomId());
 
                         switch (event.getCustomId()) {
                             case "screenshot":
                                 // Take a screenshot
                                 try {
-                                    Graphic.takeScreenshot();
+                                    Graphic.takeScreenshot(user);
                                     // Respond to the interaction indicating success
                                     return event.reply("Screenshot captured!").then();
                                 } catch (AWTException | IOException e) {
