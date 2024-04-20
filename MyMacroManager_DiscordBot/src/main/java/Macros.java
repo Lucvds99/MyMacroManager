@@ -7,7 +7,7 @@ public class Macros {
 
 
     protected Macros(Connection connection) throws AWTException {
-        this.connection = connection;
+        Macros.connection = connection;
         robot = new Robot();
     }
 

